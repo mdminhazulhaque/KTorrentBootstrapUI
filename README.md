@@ -35,7 +35,7 @@ KTorrent WebInterface theme with Bootstrap flavour
 The whole project is licensed under GPLv3 except for the following files.
 
 |Filename|Source|License|
-|---|---|
+|---|---|---|
 |vendor/bootstrap.* | https://github.com/twbs/bootstrap | [The MIT License (MIT)](https://tldrlegal.com/license/mit-license) |
 |vendor/jquery.min.js | https://github.com/jquery/jquery | [The MIT License (MIT)](https://tldrlegal.com/license/mit-license) |
 
