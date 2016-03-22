@@ -1,0 +1,182 @@
+<!--
+    KTorrentBootstrapUI, KTorrent WebInterface with Bootstrap Theme
+    Copyright (C) 2016 Md. Minhazul Haque
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>KTorrent WebInterface</title>
+        <meta http-equiv="Content-Type" content="text/html">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Md. Minhazul Haque">
+        <meta name="description" content="KTorrent WebInterface built using Bootstrap">
+        <meta name="theme-color" content="#337ab7">
+        <meta name="msapplication-navbutton-color" content="#337ab7">
+        <meta name="apple-mobile-web-app-status-bar-style" content="#337ab7">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <script type="text/javascript" src="fetch_xml.js"></script>
+        <script type="text/javascript" src="action.js"></script>
+        <script type="text/javascript" src="settings.js"></script>
+        <script type="text/javascript" src="torrent_details.js"></script>
+        <script type="text/javascript" src="engine.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="vendor/bootstrap.min.css">
+        <script type="text/javascript" src="vendor/jquery.min.js"></script>
+        <script type="text/javascript" src="vendor/bootstrap.min.js"></script>
+        
+        <style>
+            body {
+                padding-top: 40px;
+                padding-bottom: 20px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            a, a:hover {
+                color: #FFFFFF;
+            }
+        </style>
+        <script>
+        </script>
+    </head>
+    <body onload="javascript:update_settings(show_error); update_torrents(); window.setInterval(function(){refresh();}, 3000);">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">KTorrent</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="javascript:show_div('content');">All Torrents</a></li>
+                        <li><a href="javascript:show_div('torrent_load');">Load Torrent</a></li>
+                        <li><a href="javascript:show_div('settings');">Settngs</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="javascript:shutdown();">Shutdown</a></li>
+                        <li><a href="logout">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid">
+        
+            <div id="error" class="alert alert-danger" role="alert" style="margin-top: 40px; display:none;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p id="error_text">Error Text</p>
+                    </div>
+                </div><!-- end row -->
+            </div><!-- end error -->
+                
+            <div id="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>All Torrents</h3>
+                        <a class="btn btn-primary" href="javascript:refresh();">Refresh</a>
+                        <a class="btn btn-success" href="javascript:do_action('startall=true');">Start All</a>
+                        <a class="btn btn-warning" href="javascript:do_action('stopall=true');">Stop All</a>
+                        </br>
+                        </br>
+                        <table id="torrent_list_table" class="table"></table>
+                        </div>
+                </div><!-- end row -->
+            </div><!-- end content -->
+            
+            <div id="torrent_details" style="display:none;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Torrents Details</h3>
+                        <a class="btn btn-primary" href="javascript:show_div('content');">Back</a>
+                        <a class="btn btn-primary" href="javascript:clear_error(); update_torrent_details(current_torrent);">Refresh</a>
+                        <a class="btn btn-primary" href="javascript:beautify_torrent_details();">Beautify</a>
+                        </br>
+                        </br>
+                        <table id="torrent_details_table" class="table"></table>
+                        </div>
+                </div><!-- end row -->
+            </div><!-- end torrent_details -->
+            
+            <div id="torrent_load" style="display:none;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>Load Torrent</h3>
+                    </div>
+                </div><!-- end row -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <form action="javascript:load_url(); update_torrents(); show_div('content');" method="get">
+                            <label for="load_torrent">Load from URL</label>
+                            <div class="form-group">
+                                <input id="torrent_url" type="text" name="load_torrent" class="form-control" placeholder="Example: http://ktorrent.org/down/latest.torrent">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Load Torrent</button>
+                        </form>
+                    </div>
+                </div><!-- end row -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <form action="torrent/load?page=interface.html" method="post" enctype="multipart/form-data">
+                            <label for="load_torrent">Upload Torrent</label>
+                            <div class="form-group">
+                                <input type="file" name="load_torrent">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Upload Torrent</button>
+                        </form>
+                    </div>
+                </div><!-- end row -->
+            </div><!-- end load -->
+            
+            <div id="settings" style="display:none;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Settings</h3>
+                    </div>
+                </div><!-- end row -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <form id="settings_form" action="javascript:clear_error(); submit_settings(show_error);">
+                        <table class="table">
+                        <tr><td>Maximum upload speed (KiB/s)</td><td><input type="text" class="form-control" name="maxUploadRate" size="20"/></td></tr>
+                        <tr><td>Maximum download speed (KiB/s)</td><td><input type="text" class="form-control" name="maxDownloadRate" size="20"/></td></tr>
+                        <tr><td>Maximum downloads</td><td><input type="text" class="form-control" name="maxDownloads" size="20"/></td></tr>
+                        <tr><td>Maximum seeds</td><td><input type="text" class="form-control" name="maxSeeds" size="20"/></td></tr>
+                        <tr><td colspan="2"><input type="checkbox" name="useEncryption"> Use encryption</td></tr>
+                        <tr><td colspan="2"><input type="checkbox" name="allowUnencryptedConnections"> Allow unencrypted connections</td></tr>
+                        <tr><td colspan="2"><input type="checkbox" name="dhtSupport"> Use DHT</td></tr>
+                        <tr><td colspan="2"><input type="checkbox" name="pexEnabled"> Use peer exchange</td></tr>
+                        </table>
+                        <input class="btn btn-primary" type="submit" name="Submit Settings" value="Submit Settings" />
+                        </form>
+                    </div>
+                </div><!-- end row -->
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="javascript:clear_error(); update_settings(show_error);">
+                            <input class="btn btn-primary" type="button" name="Refresh" value="Refresh" />
+                        </form>
+                    </div>
+                </div><!-- end row -->
+            </div><!-- end settings -->
+            
+        </div><!-- end container -->
+    </body>
+</html>

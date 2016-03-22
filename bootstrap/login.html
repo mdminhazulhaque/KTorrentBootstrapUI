@@ -1,0 +1,82 @@
+<!--
+    KTorrentBootstrapUI, KTorrent WebInterface with Bootstrap Theme
+    Copyright (C) 2016 Md. Minhazul Haque
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>KTorrent WebInterface &mdot; Login</title>
+        <meta http-equiv="Content-Type" content="text/html">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Md. Minhazul Haque">
+        <meta name="description" content="KTorrent WebInterface built using Bootstrap">
+        <meta name="theme-color" content="#337ab7">
+        <meta name="msapplication-navbutton-color" content="#337ab7">
+        <meta name="apple-mobile-web-app-status-bar-style" content="#337ab7">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <script type="text/javascript" src="sha1.js"></script>
+        <script type="text/javascript" src="login.js"></script>
+        <script type="text/javascript" src="fetch_xml.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="vendor/bootstrap.min.css">
+        
+        <style>
+            body {
+                padding-top: 40px;
+                padding-bottom: 20px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            a, a:hover {
+                color: #FFFFFF;
+            }
+        </style>
+        <script>
+        </script>
+    </head>
+    <body onload="javascript:get_challenge();">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">KTorrent</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid">
+        
+            <div id="login_form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Login</h3>
+                        <form class="form-inline" action="login?page=interface.html" method="post" onsubmit="encrypt_pwd();">
+                        <div class="form-group">
+                            <label class="sr-only" for="username">Username</label>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="password">Password</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                            <input type="hidden" name="challenge" id="challenge" value="" />
+                        </div>
+                        <input class="btn btn-primary" type="submit" name="Login" value="Login">
+                        </form>
+                    </div>
+                </div><!-- end row -->
+            </div><!-- end content -->
+                        
+        </div><!-- end container -->
+    </body>
+</html>
