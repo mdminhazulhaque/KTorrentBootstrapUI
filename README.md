@@ -8,6 +8,7 @@ KTorrent WebInterface theme with Bootstrap flavour
 * Mobile and desktop friendly UI, totaly responsive
 * Redesigned torrent list view
 * Beautify option for torrent details table
+* Auto update torrent list and status (3s delay)
 
 ## Install
 
@@ -36,10 +37,14 @@ The whole project is licensed under GPLv3 except for the following files.
 
 |Filename|Source|License|
 |---|---|---|
-|vendor/bootstrap.* | https://github.com/twbs/bootstrap | [The MIT License (MIT)](https://tldrlegal.com/license/mit-license) |
-|vendor/jquery.min.js | https://github.com/jquery/jquery | [The MIT License (MIT)](https://tldrlegal.com/license/mit-license) |
+|bootstrap.* | https://github.com/twbs/bootstrap | [The MIT License (MIT)](https://tldrlegal.com/license/mit-license) |
+|jquery.min.js | https://github.com/jquery/jquery | [The MIT License (MIT)](https://tldrlegal.com/license/mit-license) |
 
 ## TODO
 
 * Submit this skin to KDE Developers
 * Write a installer script
+
+## BUGS
+
+* `update_torrent_details` not working
